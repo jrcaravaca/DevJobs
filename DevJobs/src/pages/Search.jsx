@@ -52,8 +52,8 @@ export function SearchPage() {
   }
 
   useEffect(() => {
-
-  }, [])
+    document.title = `Resultados: ${jobsWithTextFilter.length} - Página ${currentPage} - DevJobs`
+  }, [jobsWithTextFilter, currentPage])
 
   return (
     <>
