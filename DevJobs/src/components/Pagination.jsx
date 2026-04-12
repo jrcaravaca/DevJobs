@@ -1,3 +1,4 @@
+import styles from "./Pagination.module.css"
 
 export const Pagination = ({currentPage=1, totalPages=10, onPageChange }) => {
 
@@ -32,7 +33,7 @@ export const Pagination = ({currentPage=1, totalPages=10, onPageChange }) => {
 
 
     return (
-        <nav className="pagination">
+        <nav className={styles.pagination}>
             
             <a href="#" style={stylePrevButton} onClick={handlePrevClick}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
@@ -44,8 +45,9 @@ export const Pagination = ({currentPage=1, totalPages=10, onPageChange }) => {
             
             {pages.map(page => (
                 <a
+                    key={page}
                     href="#"
-                    className={currentPage === page ? 'is-active': ''}
+                    className={currentPage === page ? styles.isActive: ''}
                     onClick={(event) => handleChangePage(event, page)}
                 >
                     {page}
