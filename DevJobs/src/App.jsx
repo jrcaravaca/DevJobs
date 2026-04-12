@@ -1,12 +1,14 @@
-import { useState } from "react"
 import { Header } from "./components/Header/Header.jsx"
 import { Footer } from "./components/Footer/Footer.jsx"
 import { HomePage } from "./pages/Home.jsx"
 import { SearchPage } from "./pages/Search.jsx"
 import { NotFoundPage } from "./pages/404.jsx"
 
+import { useRouter } from "./hooks/useRouter.jsx"
+
+
 function App() {
-  const currentPath = window.location.pathname
+  const { currentPath } = useRouter()
 
   let page = <NotFoundPage />
 
