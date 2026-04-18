@@ -1,29 +1,20 @@
-import { useId } from "react"
+import { useId } from "react";
+import { useSearchForm } from "../hooks/useSearchForm";
+
 
 export const SearchFormSection = ({ onSearch, onTextFilter }) => {
-  const idText = useId()
-  const idTechnology = useId()
-  const idLocation = useId()
-  const idExperienceLevel = useId()
+  const idText = useId();
+  const idTechnology = useId();
+  const idLocation = useId();
+  const idExperienceLevel = useId();
 
-  const handleSubmit = (event) => { 
-    event.preventDefault()
-    
-    const formData = new FormData(event.currentTarget)
-
-    const filters = {
-      technology : formData.get(idTechnology), 
-      location: formData.get(idLocation), 
-      experienceLevel : formData.get(idExperienceLevel)
-    }
-
-    onSearch(filters)
-  }
-
-  const handleTextChange = (event) => {
-    const text = event.target.value
-    onTextFilter(text)
-  }
+  const { handleSubmit, handleTextChange } = useSearchForm({
+    idTechnology,
+    idLocation,
+    idExperienceLevel,
+    onSearch,
+    onTextFilter,
+  });
 
   return (
     <section className="jobs-search">
@@ -32,23 +23,30 @@ export const SearchFormSection = ({ onSearch, onTextFilter }) => {
 
       <form onChange={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-search"
+          >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
             <path d="M21 21l-6 -6" />
           </svg>
 
-          
-          <input 
-              name={idText} 
-              id="empleos-search-input"  
-              type="text"
-              placeholder="Buscar trabajos, empresas o habilidades" 
-              onChange={handleTextChange}
+          <input
+            name={idText}
+            id="empleos-search-input"
+            type="text"
+            placeholder="Buscar trabajos, empresas o habilidades"
+            onChange={handleTextChange}
           />
-          
         </div>
 
         <div className="search-filters">
@@ -91,7 +89,5 @@ export const SearchFormSection = ({ onSearch, onTextFilter }) => {
 
       <span id="filter-selected-value"></span>
     </section>
-
-  )
-}
-
+  );
+};
