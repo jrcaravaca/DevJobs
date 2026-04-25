@@ -2,7 +2,7 @@ import { useId } from "react";
 import { useSearchForm } from "../hooks/useSearchForm";
 
 
-export const SearchFormSection = ({ onSearch, onTextFilter }) => {
+export const SearchFormSection = ({ onSearch, onTextFilter, initialText }) => {
   const idText = useId();
   const idTechnology = useId();
   const idLocation = useId();
@@ -14,6 +14,7 @@ export const SearchFormSection = ({ onSearch, onTextFilter }) => {
     idExperienceLevel,
     onSearch,
     onTextFilter,
+    idText
   });
 
   return (
@@ -46,6 +47,7 @@ export const SearchFormSection = ({ onSearch, onTextFilter }) => {
             type="text"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
+            defaultValue={initialText}
           />
         </div>
 
