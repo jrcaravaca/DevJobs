@@ -1,7 +1,18 @@
-import React from 'react'
 import { Link } from '../Link.jsx'
+import { NavLink } from 'react-router'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext.jsx'
 
-export  const Header = () => {
+const HeaderUserButton = () => {
+  const { isLoggedIn, login, logout } = useContext(AuthContext)
+
+  return isLoggedIn 
+    ? <button onClick={logout}>Cerrar Sesión</button>
+    : <button onClick={login}>Iniciar Sesión</button>
+}
+
+export function Header () {
+  
   return (
     <header>
         <Link href="/" style={{textDecoration : 'none'}} >
@@ -16,9 +27,17 @@ export  const Header = () => {
         </Link>
 
           <nav>
-            <Link href="/search">Empleos</Link>
+            <NavLink 
+              to="/search" 
+              className={({isActive}) => isActive ? 'nav-link-active' : ''}> 
+                Empleos 
+            </NavLink>
           </nav>
+          
+          <HeaderUserButton />
 
     </header>
   )
 }
+
+
