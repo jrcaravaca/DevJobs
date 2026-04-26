@@ -4,6 +4,7 @@ import { JobListings } from "../components/JobListings.jsx"
 import { useFilters } from "../hooks/useFilters.jsx"
 
 
+
 export function SearchPage() {
 
   const {totalPages, handlePageChange, handleSearch, handleTextFilter, jobs, total, loading, currentPage, textToFilter} = useFilters()
