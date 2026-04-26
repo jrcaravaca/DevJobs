@@ -5,7 +5,7 @@ import { useFilters } from "../hooks/useFilters.jsx"
 
 
 
-export function SearchPage() {
+export default function SearchPage() {
 
   const {totalPages, handlePageChange, handleSearch, handleTextFilter, jobs, total, loading, currentPage, textToFilter} = useFilters()
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from '../Link.jsx'
 
-export const Header = () => {
+export  const Header = () => {
   return (
     <header>
         <Link href="/" style={{textDecoration : 'none'}} >
