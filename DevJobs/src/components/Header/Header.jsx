@@ -1,10 +1,9 @@
 import { Link } from '../Link.jsx'
 import { NavLink } from 'react-router'
-import { useContext } from 'react'
-import { AuthContext } from '../../context/AuthContext.jsx'
+import { useAuthStore } from '../../store/authStore.js'
 
 const HeaderUserButton = () => {
-  const { isLoggedIn, login, logout } = useContext(AuthContext)
+  const {isLoggedIn,  login, logout } = useAuthStore()
 
   return isLoggedIn 
     ? <button onClick={logout}>Cerrar Sesión</button>
