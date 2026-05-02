@@ -1,6 +1,7 @@
 import { Link } from '../Link.jsx'
 import { NavLink } from 'react-router'
 import { useAuthStore } from '../../store/authStore.js'
+import { useFavoritesStore } from '../../store/favoritesStore.js'
 
 const HeaderUserButton = () => {
   const {isLoggedIn,  login, logout } = useAuthStore()
@@ -11,7 +12,11 @@ const HeaderUserButton = () => {
 }
 
 export function Header () {
-  
+  const { isLoggedIn } = useAuthStore()
+  const { countFavorites } = useFavoritesStore()
+
+  const numberOfFavorites = countFavorites()
+
   return (
     <header>
         <Link href="/" style={{textDecoration : 'none'}} >
@@ -31,6 +36,13 @@ export function Header () {
               className={({isActive}) => isActive ? 'nav-link-active' : ''}> 
                 Empleos 
             </NavLink>
+            {
+              isLoggedIn && (
+                <NavLink className={({isActive}) => isActive ? 'nav-link-active' : ''} to="/profile">
+                  Profile ❤️{numberOfFavorites}
+                </NavLink>
+              )
+            }
           </nav>
           
           <HeaderUserButton />

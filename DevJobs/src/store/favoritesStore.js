@@ -29,6 +29,8 @@ export const useFavoritesStore = create((set,get) => ({
         const isFav = isFavorite(jobId)
 
         isFav ? removeFavorite(jobId) : addFavorite(jobId)
-    }
+    },
+
+    countFavorites: () => get().favorites.length
 
 }))
