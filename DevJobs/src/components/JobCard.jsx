@@ -2,12 +2,15 @@ import { useState } from "react"
 import { Link } from "./Link"
 import styles from "./JobCard.module.css"
 import { useFavoritesStore } from "../store/favoritesStore"
+import { useAuthStore } from "../store/authStore"
 
 function JobCardFavoriteButton ({jobId}) {
-  const { toggleFavorite, isFavorite } = useFavoritesStore()
+  const { isFavorite, toggleFavorite } = useFavoritesStore()
+  const { isLoggedIn } = useAuthStore()
   
   return (
     <button
+      disabled={!isLoggedIn}
       onClick={() => toggleFavorite(jobId)}
       aria-label={isFavorite(jobId) ? 'Quitar de favoritos' : 'Añadir a favoritos'}>
         {isFavorite(jobId) ? '❤️' : '🤍'}
@@ -15,39 +18,48 @@ function JobCardFavoriteButton ({jobId}) {
   )
 }
 
-export function JobCard({ job }) {
+function JobCardApplyButton( {jobId} ) {
   const [isApplied, setIsApplied] = useState(false)
-
-  const handleApplyClick = () => {
-    setIsApplied(true)
-  }
+  const { isLoggedIn } = useAuthStore()
 
   const buttonClasses = isApplied ? 'button-apply-job is-applied' : 'button-apply-job'
   const buttonText = isApplied ? 'Aplicado' : 'Aplicar'
+
+  const handleApplyClick = () => {
+    console.log(`Aplicando a trabajo ${jobId}`)
+    setIsApplied(true)
+  }
+
+  return(
+    <button disabled={!isLoggedIn} className={buttonClasses} onClick={handleApplyClick}>{buttonText}</button>
+  )
+}
+
+export function JobCard({ job }) {
+  
 
   return (
     <article 
       className="job-listing-card"
       data-modalidad={job.data.modalidad}
       data-nivel={job.data.nivel}
-      data-technology={job.data.technology}
-    >
-      <div>
-        <h3>
-          <Link className={styles.title} href={`/jobs/${job.id}`}>
-            {job.titulo}
+      data-technology={job.data.technology}>
+        <div>
+          <h3>
+            <Link className={styles.title} href={`/jobs/${job.id}`}>
+              {job.titulo}
+            </Link>
+          </h3>
+          <small>{job.empresa} | {job.ubicacion}</small>
+          <p>{job.descripcion}</p>
+        </div>
+        <div className={styles.actions}>
+          <Link href={`/jobs/${job.id}`} className={styles.details}>
+            Ver detalles
           </Link>
-        </h3>
-        <small>{job.empresa} | {job.ubicacion}</small>
-        <p>{job.descripcion}</p>
-      </div>
-      <div className={styles.actions}>
-        <Link href={`/jobs/${job.id}`} className={styles.details}>
-          Ver detalles
-        </Link>
-        <button className={buttonClasses} onClick={handleApplyClick}>{buttonText}</button>
-        <JobCardFavoriteButton jobId={job.id} />
-      </div>
+          <JobCardApplyButton jobId={job.id} />
+          <JobCardFavoriteButton jobId={job.id} />
+        </div>
     </article>
   )
 }
