@@ -5,9 +5,15 @@ import { useFavoritesStore } from '../../store/favoritesStore.js'
 
 const HeaderUserButton = () => {
   const {isLoggedIn,  login, logout } = useAuthStore()
+  const { clearFavorites } = useFavoritesStore()
+
+  const handleLogout = () => {
+    logout()
+    clearFavorites()
+  }
 
   return isLoggedIn 
-    ? <button onClick={logout}>Cerrar Sesión</button>
+    ? <button onClick={handleLogout}>Cerrar Sesión</button>
     : <button onClick={login}>Iniciar Sesión</button>
 }
 
